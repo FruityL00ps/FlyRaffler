@@ -1,0 +1,9 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="FlyRaffler:jar">
+    <output-path>$USER_HOME$/Desktop/Spigot Serevr]/plugins</output-path>
+    <root id="archive" name="FlyRaffler.jar">
+      <element id="module-output" name="FlyRaffler" />
+      <element id="extracted-dir" path="A:/Bukkit,Spigot Development/spigot-1.12.2.jar" path-in-jar="/" />
+    </root>
+  </artifact>
+</component>

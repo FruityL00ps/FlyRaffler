@@ -1,0 +1,10 @@
+name: FlyRaffler
+main: me.decyphr.FlyRaffler.FlyRaffler
+version: 0.1
+description: Allows players to host raffles accross the server for items.
+
+commands:
+  raffle:
+    description: "Starts a raffle for the item in your hand."
+    aliases: [startraffle, raf]
+    permission: flyraffler.startraffle

@@ -18,6 +18,8 @@ public class FlyRaffler extends JavaPlugin {
         plugin = instance;
     }
     
+    ArrayList<int> timeList = new ArrayList<int>();
+    
     @Override
     public void onEnable() {
         config.addDefault("prefix", "§8[§aFlyRaffler§8] §f");
@@ -30,7 +32,9 @@ public class FlyRaffler extends JavaPlugin {
         list.add(3);
         list.add(2);
         list.add(1);
-        config.addDefault("countdown", list);
+        config.addDefault("time.countdown", list);
+        
+        timeList = config.getIntegerList("time.countdown");
         
         saveConfig();
         config.options().copyDefaults(true);
@@ -60,28 +64,18 @@ public class FlyRaffler extends JavaPlugin {
                 if (args.length() >= 1) {
                     if (isNumeric(args[0])) {
                         amount = Integer.parseInt(args[0]);
+                        ItemStack originalItemStack = player.getItemInHand();
                         ItemStack raffleItemStack = player.getItemInHand();
                         raffleItemStack.setAmount(amount);
                         String itemName = raffleItemStack.getItemMeta().hasDisplayName() ? raffleItemStack.getItemMeta().getDisplayname() : raffleItemStack.getType().replace("_", " ").toLowerCase();
                         
-                        Player winningPlayer = winner();
-                        while (winningPlayer == player) {
-                            winningPlayer = winner();
-                        }
                         for (Player p1 : Bukkit.getServer().getOnlinePlayers()) {
                             p1.sendMessage(config.getString("prefix") + "§a" + player.getName() + " §7is raffling off §6" + amount.toString() + "x §e" + itemName + "§7.");
                             p1.sendMessage(config.getString("prefix") + "§7The winner will be picked in §b" + config.getInteger("time") + "§7!");
-                            
+                            player.getItemInHand().setAmount(player.getItemInHand().getAmount() - amount);
+                            RaffleThread thread = new RaffleThread(config.getInteger("time"), p1, raffleItemStack, originalItemStack, player, config, winner());
+                            thread.start();
                         }
-                        if (winningPlayer.getInventory().firstEmpty() == -1) {
-                            winningPlayer.getWorld().dropItem(winningPlayer.getLocation(), raffleItemStack);
-                        }
-                        else {
-                            winningPlayer.getInventory().addItem(raffleItemStack);
-                        }
-                        player.getItemInHand().setAmount(player.getItemInHand().getAmount() - amount);
-                        winningPlayer.sendMessage(config.getString("prefix") + "§7You have won the raffle started by §a" + player.getName() + "§7!");
-                        winningPlayer.sendMessage("§7Check your inventory or the ground for the prize!");
                     }
                     else {
                         if (args[0].equalsIgnoreCase("reload") || args[0].equalsIgnoreCase("rl")) {
@@ -197,13 +191,51 @@ public class FlyRaffler extends JavaPlugin {
     
     public class RaffleThread implements Runnable {
         public int timee;
+        public Player player;
+        public ItemStack winnersItemStack;
+        public ItemStack rafflersItemStack;
+        public Player raffler;
+        public FileConfiguration config;
+        public Player winningPlayer;
 
-        public RaffleThread (int timee) {
+        public RaffleThread (int timee, Player player, ItemStack winnersItemStack, ItemStack rafflersItemStack, Player raffler, FileConfiguration config, Player winningPlayer) {
             this.timee = timee;
+            this.player = player;
+            this.winnersItemStack = winnersItemStack;
+            this.rafflersItemStack = rafflersItemStack;
+            this.raffler = raffler;
+            this.config = config;
+            this.winningPlayer = winningPlayer;
         }
 
         public void run() {
-            Thread.sleep();
+            currInterval = timee;
+            timeOn = -1;
+            currentCountdown = timee;
+            for (int i = 0; i <= currInterval; i++) {
+                if (currentCountdown == 0) {
+                    done();
+                }
+                else {
+                    if (i == currInterval) {
+                        timeOn++;
+                        currInterval = timeList[timeOn];
+                    }
+                    Thread.sleep(1000);
+                    currentCountdown--;
+                }
+            }
+        }
+        
+        public void done() {
+            if (winningPlayer.getInventory().firstEmpty() == -1) {
+                winningPlayer.getWorld().dropItem(winningPlayer.getLocation(), raffleItemStack);
+            }
+            else {
+                winningPlayer.getInventory().addItem(raffleItemStack);
+            }
+            winningPlayer.sendMessage(config.getString("prefix") + "§7You have won the raffle started by §a" + raffler.getName() + "§7!");
+            winningPlayer.sendMessage("§7Check your inventory or the ground for the prize!");
         }
     }
 }

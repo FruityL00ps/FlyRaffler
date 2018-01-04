@@ -1,2 +1,3 @@
 prefix: '§8[§aFlyRaffler§8] §f'
 time: 30
+countdown: [20, 10, 3, 2, 1]

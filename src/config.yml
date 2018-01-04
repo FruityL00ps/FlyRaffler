@@ -1,1 +1,7 @@
+<<<<<<< HEAD
 prefix: '§7[§6RAFFLE§7] §f'
+=======
+prefix: '§8[§aFlyRaffler§8] §f'
+time: 30
+countdown: [20, 10, 3, 2, 1]
+>>>>>>> 20dde57915b0708acecf9e5d742fe92da127ca5c

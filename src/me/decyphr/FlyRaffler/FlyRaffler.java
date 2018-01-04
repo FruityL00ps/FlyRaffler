@@ -74,8 +74,11 @@ public class FlyRaffler extends JavaPlugin {
                             if (player.hasPermission("flyraffler.admin.reload")) {
                                 reloadConfig();
                             }
+                            else {
+                                player.sendMessage("§c§lAlert! §cYou do not have permission to reload FlyRaffler.");
+                            }
                         }
-                        if (args[0].equalsIgnoreCase("participate") || args[0].equalsIgnoreCase("p")) {
+                        else if (args[0].equalsIgnoreCase("participate") || args[0].equalsIgnoreCase("p")) {
                             if (player.hasPermission("flyraffler.participate.toggle")) {
                                 if (args.length() >= 2) {
                                     if (args[1].equalsIgnoreCase("on")) {
@@ -93,13 +96,41 @@ public class FlyRaffler extends JavaPlugin {
                                 }
                             }
                             else {
-                                player.sendMessage("§cAlert! You do not have permission to toggle your participation in raffles.");
+                                player.sendMessage("§c§lAlert! §cYou do not have permission to toggle your participation in raffles.");
                             }
-                        }   
+                        }
+                        else {
+                            player.sendMessage("§cInvalid arguments! Usage:");
+                            player.sendMessage("§6/raffle [number] §f: §7Start a raffle for the item in your hand.");
+                            player.sendMessage("§6/raffle participate [on/off] §f: §7Toggle your participation in raffles.");
+                            player.sendMessage("§6/raffle reload §f: §7Reload the FlyRaffler plugin.");
+                            
+                        }
                     }
                 }
                 else {
-                    
+                    Player winningPlayer = winner();
+                    while (winningPlayer == player) {
+                        winningPlayer = winner();
+                    }
+                    for (Player p1 : Bukkit.getServer().getOnlinePlayers()) {
+                        if (player.getItemInHand().getItemMeta().hasDisplayName()) {
+                            p1.sendMessage(config.getString("prefix") + "§a" + player.getName() + " §7is raffling off §e" + player.getItemInHand().getItemMeta().getDisplayName() + "§7.");
+                        }
+                        else {
+                            p1.sendMessage(config.getString("prefix") + "§a" + player.getName() + " §7is raffling off §e" + player.getItemInHand().getType().toString() + "§7.");
+                        }
+                        p1.sendMessage(config.getString("prefix") + "§7The winner is §b" + winningPlayer.getName() + "§7!");
+                    }
+                    if (winningPlayer.getInventory().firstEmpty() == -1) {
+                        winningPlayer.getWorld().dropItem(winningPlayer.getLocation(), player.getItemInHand());
+                    }
+                    else {
+                        winningPlayer.getInventory().addItem(player.getItemInHand());
+                    }
+                    player.getItemInHand().setAmount(player.getItemInHand().getAmount() - 1);
+                    winningPlayer.sendMessage(config.getString("prefix") + "§7You have won the raffle started by §a" + player.getName() + "§7!");
+                    winningPlayer.sendMessage("§7Check your inventory or the ground for the prize!");
                 }
             }
         }

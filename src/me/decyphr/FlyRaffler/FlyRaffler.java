@@ -21,6 +21,18 @@ public class FlyRaffler extends JavaPlugin {
     @Override
     public void onEnable() {
         config.addDefault("prefix", "§8[§aFlyRaffler§8] §f");
+        
+        config.addDefault("time", 30);
+        
+        ArrayList<int> list = new ArrayList<int>();
+        list.add(20);
+        list.add(10);
+        list.add(3);
+        list.add(2);
+        list.add(1);
+        config.addDefault("countdown", list);
+        
+        saveConfig();
         config.options().copyDefaults(true);
         saveConfig();
         log.info("FlyRaffler config loaded.");
@@ -44,28 +56,30 @@ public class FlyRaffler extends JavaPlugin {
         if (sender instanceof Player) {
             Player player = (Player) sender;
             if (label.equalsIgnoreCase("raffle")) {
+                int amount = 1;
                 if (args.length() >= 1) {
                     if (isNumeric(args[0])) {
+                        amount = Integer.parseInt(args[0]);
+                        ItemStack raffleItemStack = player.getItemInHand();
+                        raffleItemStack.setAmount(amount);
+                        String itemName = raffleItemStack.getItemMeta().hasDisplayName() ? raffleItemStack.getItemMeta().getDisplayname() : raffleItemStack.getType().replace("_", " ").toLowerCase();
+                        
                         Player winningPlayer = winner();
                         while (winningPlayer == player) {
                             winningPlayer = winner();
                         }
                         for (Player p1 : Bukkit.getServer().getOnlinePlayers()) {
-                            if (player.getItemInHand().getItemMeta().hasDisplayName()) {
-                                p1.sendMessage(config.getString("prefix") + "§a" + player.getName() + " §7is raffling off §e" + player.getItemInHand().getItemMeta().getDisplayName() + "§7.");
-                            }
-                            else {
-                                p1.sendMessage(config.getString("prefix") + "§a" + player.getName() + " §7is raffling off §e" + player.getItemInHand().getType().toString() + "§7.");
-                            }
-                            p1.sendMessage(config.getString("prefix") + "§7The winner is §b" + winningPlayer.getName() + "§7!");
+                            p1.sendMessage(config.getString("prefix") + "§a" + player.getName() + " §7is raffling off §6" + amount.toString() + "x §e" + itemName + "§7.");
+                            p1.sendMessage(config.getString("prefix") + "§7The winner will be picked in §b" + config.getInteger("time") + "§7!");
+                            
                         }
                         if (winningPlayer.getInventory().firstEmpty() == -1) {
-                            winningPlayer.getWorld().dropItem(winningPlayer.getLocation(), player.getItemInHand());
+                            winningPlayer.getWorld().dropItem(winningPlayer.getLocation(), raffleItemStack);
                         }
                         else {
-                            winningPlayer.getInventory().addItem(player.getItemInHand());
+                            winningPlayer.getInventory().addItem(raffleItemStack);
                         }
-                        player.getItemInHand().setAmount(player.getItemInHand().getAmount() - 1);
+                        player.getItemInHand().setAmount(player.getItemInHand().getAmount() - amount);
                         winningPlayer.sendMessage(config.getString("prefix") + "§7You have won the raffle started by §a" + player.getName() + "§7!");
                         winningPlayer.sendMessage("§7Check your inventory or the ground for the prize!");
                     }
@@ -100,7 +114,7 @@ public class FlyRaffler extends JavaPlugin {
                             }
                         }
                         else {
-                            player.sendMessage("§cInvalid arguments! Usage:");
+                            player.sendMessage("§cInvalid arguments! Usages:");
                             player.sendMessage("§6/raffle [number] §f: §7Start a raffle for the item in your hand.");
                             player.sendMessage("§6/raffle participate [on/off] §f: §7Toggle your participation in raffles.");
                             player.sendMessage("§6/raffle reload §f: §7Reload the FlyRaffler plugin.");
@@ -178,6 +192,18 @@ public class FlyRaffler extends JavaPlugin {
         }
         else {
             player.sendMessage(config.getString("prefix") + "§7You are already not on the raffle list!");
+        }
+    }
+    
+    public class RaffleThread implements Runnable {
+        public int timee;
+
+        public RaffleThread (int timee) {
+            this.timee = timee;
+        }
+
+        public void run() {
+            Thread.sleep();
         }
     }
 }

@@ -17,11 +17,11 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="FlyRaffler.java" pinned="false" current-in-tab="true">
+      <file leaf-file-name="FlyRaffler.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/me/decyphr/FlyRaffler/FlyRaffler.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-530">
-              <caret line="41" column="188" lean-forward="true" selection-start-line="41" selection-start-column="188" selection-end-line="41" selection-end-column="188" />
+            <state relative-caret-position="660">
+              <caret line="111" column="80" lean-forward="true" selection-start-line="111" selection-start-column="80" selection-end-line="111" selection-end-column="80" />
               <folding>
                 <element signature="imports" expanded="true" />
                 <element signature="e#524#532#0" expanded="true" />
@@ -42,11 +42,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="config.yml" pinned="false" current-in-tab="false">
+      <file leaf-file-name="config.yml" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/config.yml">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="119">
-              <caret line="7" column="0" lean-forward="false" selection-start-line="7" selection-start-column="0" selection-end-line="7" selection-end-column="0" />
+            <state relative-caret-position="0">
+              <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
               <folding />
             </state>
           </provider>
@@ -72,9 +72,9 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/src/config.yml" />
         <option value="$PROJECT_DIR$/src/plugin.yml" />
         <option value="$PROJECT_DIR$/src/me/decyphr/FlyRaffler/FlyRaffler.java" />
+        <option value="$PROJECT_DIR$/src/config.yml" />
       </list>
     </option>
   </component>
@@ -325,14 +325,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/config.yml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="119">
-          <caret line="7" column="0" lean-forward="false" selection-start-line="7" selection-start-column="0" selection-end-line="7" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/plugin.yml">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
@@ -343,14 +335,22 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/me/decyphr/FlyRaffler/FlyRaffler.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-530">
-          <caret line="41" column="188" lean-forward="true" selection-start-line="41" selection-start-column="188" selection-end-line="41" selection-end-column="188" />
+        <state relative-caret-position="660">
+          <caret line="111" column="80" lean-forward="true" selection-start-line="111" selection-start-column="80" selection-end-line="111" selection-end-column="80" />
           <folding>
             <element signature="imports" expanded="true" />
             <element signature="e#524#532#0" expanded="true" />
             <element signature="e#9355#9356#0" expanded="true" />
             <element signature="e#9421#9422#0" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/config.yml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
         </state>
       </provider>
     </entry>

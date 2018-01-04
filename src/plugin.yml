@@ -1,6 +1,6 @@
 name: FlyRaffler
 main: me.decyphr.FlyRaffler.FlyRaffler
-version: 0.1
+version: 2.1
 description: Allows players to host raffles accross the server for items.
 
 commands:

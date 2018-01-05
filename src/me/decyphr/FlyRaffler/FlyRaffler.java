@@ -6,13 +6,18 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
+import org.bukkit.event.EventHandler;
+import org.bukkit.event.Listener;
+import org.bukkit.event.player.PlayerJoinEvent;
+import org.bukkit.event.player.PlayerQuitEvent;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-public class FlyRaffler extends JavaPlugin {
+public class FlyRaffler extends JavaPlugin implements Listener {
     FileConfiguration config = getConfig();
     List<Player> participatingPlayers = new ArrayList<Player>();
 
@@ -21,6 +26,24 @@ public class FlyRaffler extends JavaPlugin {
         config.addDefault("prefix", "§7[§6RAFFLE§7] §f");
         config.options().copyDefaults(true);
         saveConfig();
+
+        for (Player p1 : Bukkit.getServer().getOnlinePlayers()) {
+            participatingPlayers.add(p1);
+        }
+        PluginManager pm = Bukkit.getServer().getPluginManager();
+        pm.registerEvents(this, this);
+    }
+
+    @EventHandler
+    public void onPlayerJoinEvent(PlayerJoinEvent event) {
+        participatingPlayers.add(event.getPlayer());
+        Bukkit.getLogger().info("Registered player on list");
+    }
+
+    @EventHandler
+    public void onPlayerQuit(PlayerQuitEvent event) {
+        participatingPlayers.remove(event.getPlayer());
+        Bukkit.getLogger().info("Unregistered player on list");
     }
 
     @Override
@@ -66,34 +89,7 @@ public class FlyRaffler extends JavaPlugin {
                     else {
                         if (args[0].equalsIgnoreCase("participate") || args[0].equalsIgnoreCase("p")) {
                             if (player.hasPermission("flyraffler.toggleparticipation")) {
-                                if (args.length >= 2) {
-                                    if (args[1].equalsIgnoreCase("on")) {
-                                        if (participatingPlayers.contains(player) == false) {
-                                            participatingPlayers.remove(player);
-                                            player.sendMessage(config.getString("prefix") + "§7You have §aenabled §7your raffle participation.");
-                                        }
-                                        else {
-                                            participatingPlayers.remove(player);
-                                            player.sendMessage("§c(!) §7You are already participating in raffles.");
-                                        }
-                                    }
-                                    else if (args[1].equalsIgnoreCase("off")) {
-                                        if (participatingPlayers.contains(player)) {
-                                            participatingPlayers.remove(player);
-                                            player.sendMessage(config.getString("prefix") + "§c§l(!) §7You have §cdisabled §7your raffle participation.");
-                                        }
-                                        else {
-                                            participatingPlayers.remove(player);
-                                            player.sendMessage("§c(!) §7You are already not participating in raffles.");
-                                        }
-                                    }
-                                    else {
-                                        ToggleParticipation(player);
-                                    }
-                                }
-                                else {
-                                    ToggleParticipation(player);
-                                }
+                                ToggleParticipation(player);
                             }
                             else {
                                 player.sendMessage("§cError! Invalid permissions.");
@@ -106,6 +102,13 @@ public class FlyRaffler extends JavaPlugin {
                             }
                             else {
                                 player.sendMessage("§cError! Invalid permissions.");
+                            }
+                        }
+                        else if (args[0].equalsIgnoreCase("listp")) {
+                            if (player.hasPermission("flyraffler.admin.listp")) {
+                                for (Player pp : participatingPlayers) {
+                                    player.sendMessage(pp.getPlayer().getName());
+                                }
                             }
                         }
                         else {

@@ -18,6 +18,7 @@ import java.util.List;
 import java.util.Random;
 
 public class FlyRaffler extends JavaPlugin implements Listener {
+    Logger log = Bukkit.getLogger();
     FileConfiguration config = getConfig();
     List<Player> participatingPlayers = new ArrayList<Player>();
 
@@ -37,13 +38,13 @@ public class FlyRaffler extends JavaPlugin implements Listener {
     @EventHandler
     public void onPlayerJoinEvent(PlayerJoinEvent event) {
         participatingPlayers.add(event.getPlayer());
-        Bukkit.getLogger().info("Registered player on list");
+        log.info("§4[DEBUG] §fRegistered player " + event.getPlayer().getName() + " on the participating players list.");
     }
 
     @EventHandler
     public void onPlayerQuit(PlayerQuitEvent event) {
         participatingPlayers.remove(event.getPlayer());
-        Bukkit.getLogger().info("Unregistered player on list");
+        log.info("§4[DEBUG] §fUnregistered player " + event.getPlayer().getName() + " from the participating players list.");
     }
 
     @Override

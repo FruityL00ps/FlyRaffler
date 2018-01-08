@@ -51,11 +51,10 @@ public class FlyRaffler extends JavaPlugin implements Listener {
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
         if (sender instanceof Player) {
             Player player = (Player) sender;
-            if (label.equalsIgnoreCase("raffle") || label.equalsIgnoreCase("raf")) {
+            if (label.equalsIgnoreCase("raffle")) {
                 if (args.length >= 1) {
                     if (isNumeric(args[0])) {
                         participatingPlayers.remove(player);
-                        player.sendMessage(config.getString("prefix") + "§7You have §cdisabled §7your raffle participation.");
                         if (participatingPlayers.isEmpty() == false) {
                             Player winningPlayer = winner();
                             int amount = 1;
@@ -85,7 +84,6 @@ public class FlyRaffler extends JavaPlugin implements Listener {
                             player.sendMessage("§c(!)  Not enough players online to do a raffle!");
                         }
                         participatingPlayers.add(player);
-                        player.sendMessage(config.getString("prefix") + "§7You have §aenabled §7your raffle participation.");
                     }
                     else {
                         if (args[0].equalsIgnoreCase("participate") || args[0].equalsIgnoreCase("p")) {
@@ -119,8 +117,7 @@ public class FlyRaffler extends JavaPlugin implements Listener {
                 }
                 else {
                     //TODO: single raffle item code here :DONE
-                    participatingPlayers.remove(player);
-                    player.sendMessage(config.getString("prefix") + "§7You have §cdisabled §7your raffle participation.");
+                    participatingPlayers.remove(player);]
                     if (participatingPlayers.isEmpty() == false) {
                         Player winningPlayer = winner();
                         int amount = 1;
@@ -145,8 +142,7 @@ public class FlyRaffler extends JavaPlugin implements Listener {
                     else {
                         player.sendMessage("§c(!) Not enough players online to do a raffle!");
                     }
-                    participatingPlayers.add(player);
-                    player.sendMessage(config.getString("prefix") + "§7You have §aenabled §7your raffle participation.");
+                    participatingPlayers.add(player);]
                 }
             }
         }

@@ -51,7 +51,7 @@ public class FlyRaffler extends JavaPlugin implements Listener {
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
         if (sender instanceof Player) {
             Player player = (Player) sender;
-            if (label.equalsIgnoreCase("raffle")) {
+            if (command.getName().equalsIgnoreCase("startraffle")) {
                 if (args.length >= 1) {
                     if (isNumeric(args[0])) {
                         participatingPlayers.remove(player);
@@ -86,33 +86,7 @@ public class FlyRaffler extends JavaPlugin implements Listener {
                         participatingPlayers.add(player);
                     }
                     else {
-                        if (args[0].equalsIgnoreCase("participate") || args[0].equalsIgnoreCase("p")) {
-                            if (player.hasPermission("flyraffler.toggleparticipation")) {
-                                ToggleParticipation(player);
-                            }
-                            else {
-                                player.sendMessage("§cError! Invalid permissions.");
-                            }
-                        }
-                        else if (args[0].equalsIgnoreCase("reload") || args[0].equalsIgnoreCase("rl")) {
-                            if (player.hasPermission("flyraffler.admin.reload")) {
-                                reloadConfig();
-                                player.sendMessage("§aFlyRaffler 2.0 reloaded!");
-                            }
-                            else {
-                                player.sendMessage("§cError! Invalid permissions.");
-                            }
-                        }
-                        else if (args[0].equalsIgnoreCase("listp")) {
-                            if (player.hasPermission("flyraffler.admin.listp")) {
-                                for (Player pp : participatingPlayers) {
-                                    player.sendMessage(pp.getPlayer().getName());
-                                }
-                            }
-                        }
-                        else {
-                            player.sendMessage("§cError! Invalid sub-command!");
-                        }
+                        player.sendMessage("§c(!) Usage: /startraffle [count]");
                     }
                 }
                 else {
@@ -143,6 +117,59 @@ public class FlyRaffler extends JavaPlugin implements Listener {
                         player.sendMessage("§c(!) Not enough players online to do a raffle!");
                     }
                     participatingPlayers.add(player);]
+                }
+            }
+            
+            if (command.getName().equalsIgnoreCase("raffle")) {
+                if (args.length >= 1) {
+                    if (args[0].equalsIgnoreCase("participate") || args[0].equalsIgnoreCase("p")) {
+                        if (player.hasPermission("flyraffler.toggleparticipation")) {
+                            ToggleParticipation(player);
+                        }
+                        else {
+                            player.sendMessage("§cError! Invalid permissions.");
+                        }
+                    }
+                    else if (args[0].equalsIgnoreCase("reload") || args[0].equalsIgnoreCase("rl")) {
+                        if (player.hasPermission("flyraffler.admin.reload")) {
+                            reloadConfig();
+                            player.sendMessage("§aFlyRaffler 2.0 reloaded!");
+                        }
+                        else {
+                            player.sendMessage("§cError! Invalid permissions.");
+                        }
+                    }
+                    else if (args[0].equalsIgnoreCase("listp")) {
+                        if (player.hasPermission("flyraffler.admin.listp")) {
+                            for (Player pp : participatingPlayers) {
+                                player.sendMessage(pp.getPlayer().getName());
+                            }
+                        }
+                    }
+                    else if (args[0].equalsIgnoreCase("info")) {
+                        player.sendMessage("§9---------- §5" + getDescription().getName() + " §9----------");
+                        player.sendMessage("§6Version: §7" + getDescription().getPlugin());
+                        player.sendMessage("§6Author: §7" + getDescription().getAuthor());
+                        player.sendMessage("§7Use §6/raffle help §7to list commands and usages.");
+                    }
+                    else if (args[0].equalsIgnoreCase("help")) {
+                        player.sendMessage("§9---------- §5" + getDescription().getName() + " §9Help ----------");
+                        player.sendMessage("§6/startraffle §7or §9/sraf §7or /§9sr§7: Raffle off time item in your hand");
+                        player.sendMessage("    §9Usage§7: /startraffle [count]");
+                        player.sendMessage("§6/raffle §7or /§9raf §7or /§9flyraffler§7: FlyRaffler base command");
+                        player.sendMessage("    §9Usage§7: /raffle [§i§7sub-command§7]");
+                        player.sendMessage("    §9Sub-Commands§7:");
+                        player.sendMessage("        §9participate §7or §9p§7: Toggle your participation in raffles");
+                        player.sendMessage("        §9help§7: Shows this menu");
+                        player.sendMessage("        §9listp§7: Lists all participating players");
+                        player.sendMessage("        §9reload §7or §9rl: Reloads the FlyRaffler configuration");
+                    }
+                    else {
+                        player.sendMessage("§9---------- §5" + getDescription().getName() + " §9----------");
+                        player.sendMessage("§6Version: §7" + getDescription().getPlugin());
+                        player.sendMessage("§6Author: §7" + getDescription().getAuthor());
+                        player.sendMessage("§7Use §6/raffle help §7to list commands and usages.");
+                    }
                 }
             }
         }

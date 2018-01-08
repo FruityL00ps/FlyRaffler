@@ -7,6 +7,4 @@ commands:
   raffle:
     description: "FlyRaffler base command"
     permission: flyraffler.startraffle
-  raf:
-    description: "FlyRaffler base command"
-    permission: flyraffler.startraffle
+    aliases: ['raf']

@@ -6,5 +6,8 @@ description: Allows players to host raffles accross the server for items.
 commands:
   raffle:
     description: "FlyRaffler base command"
+    aliases: ['raf', 'flyraffler']
+  startraffle:
+    description: "Raffle off time item in your hand"
     permission: flyraffler.startraffle
-    aliases: ['raf']
+    aliases: ['sraf', 'sr']

@@ -1,6 +1,2 @@
-{
-  "language": "java",
-  "group": "stable",
-  "dist": "trusty",
-  "os": "linux"
-}
+language: java
+install: ant deps

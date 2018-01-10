@@ -2,5 +2,5 @@
   "language": "java",
   "group": "stable",
   "dist": "trusty",
-  "os": "windows"
+  "os": "linux"
 }

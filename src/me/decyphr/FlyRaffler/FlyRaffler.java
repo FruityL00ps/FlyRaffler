@@ -91,7 +91,7 @@ public class FlyRaffler extends JavaPlugin implements Listener {
                 }
                 else {
                     //TODO: single raffle item code here :DONE
-                    participatingPlayers.remove(player);]
+                    participatingPlayers.remove(player);
                     if (participatingPlayers.isEmpty() == false) {
                         Player winningPlayer = winner();
                         int amount = 1;

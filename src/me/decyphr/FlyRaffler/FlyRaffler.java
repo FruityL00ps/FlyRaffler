@@ -116,7 +116,7 @@ public class FlyRaffler extends JavaPlugin implements Listener {
                     else {
                         player.sendMessage("§c(!) Not enough players online to do a raffle!");
                     }
-                    participatingPlayers.add(player);]
+                    participatingPlayers.add(player);
                 }
             }
             

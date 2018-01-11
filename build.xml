@@ -2,6 +2,7 @@
 	<property name="pluginname" value="FlyRaffler"/>
 	<property name="bukkit.jar" location="../Bukkit/dist/Bukkit.jar"/>
 	<property name="plugins" location="../../plugins/"/>
+        <property name="libdir" value="lib/" />
 
 	<property name="src" location="src"/>
 	<property name="bin" location="bin"/>
@@ -15,6 +16,9 @@
 		<javac srcdir="${src}" destdir="${bin}" includeantruntime="false">
 			<classpath>
 				<pathelement location="${bukkit.jar}"/>
+				<fileset dir="${libdir}">
+                    			<include name="*.jar" />
+                		</fileset>
 			</classpath>
 		</javac>
 	</target>
